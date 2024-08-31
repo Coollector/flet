@@ -12,7 +12,7 @@ class EventHandler:
 
     def get_handler(self):
         async def fn(e: ControlEvent):
-            for handler in self.__handlers.keys():
+            for handler in list(self.__handlers.keys()):
                 ce = e
                 if self.__result_converter is not None:
                     ce = self.__result_converter(e)
@@ -36,7 +36,7 @@ class EventHandler:
             self.__handlers[handler] = True
 
     def unsubscribe(self, handler: Callable[[ControlEvent], None]):
-        if handler in self.__handlers:
+        if handler in list(self.__handlers):
             self.__handlers.pop(handler)
 
     def count(self) -> int:
